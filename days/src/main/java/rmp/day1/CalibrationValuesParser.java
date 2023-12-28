@@ -1,19 +1,25 @@
-package rmp;
-
-import org.eclipse.collections.api.IntIterable;
-import org.eclipse.collections.api.RichIterable;
+package rmp.day1;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
-public class CalibrationValuesParser {
+public class CalibrationValuesParser implements Consumer<String> {
 
-    private final String[] wordDigits = new String[]{"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+    private static final String[] WORD_DIGITS = new String[]{"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+
+    private long sum = 0L;
 
     public CalibrationValuesParser() {
     }
 
-    public IntIterable values(RichIterable<String> lines) {
-        return lines.collectInt(this::parseCalibrationLine);
+
+    @Override
+    public void accept(String line) {
+        sum += parseCalibrationLine(line);
+    }
+
+    public long sum() {
+        return sum;
     }
 
     private int parseCalibrationLine(String line) {
@@ -51,8 +57,8 @@ public class CalibrationValuesParser {
     }
 
     private Integer wordDigit(String line, int lineIndex) {
-        for (int wordIndex = 1; wordIndex < wordDigits.length; wordIndex++) {
-            if (wordMatch(wordDigits[wordIndex], line, lineIndex))
+        for (int wordIndex = 1; wordIndex < WORD_DIGITS.length; wordIndex++) {
+            if (wordMatch(WORD_DIGITS[wordIndex], line, lineIndex))
                 //word digit's index is matching number!
                 return wordIndex;
         }
@@ -68,4 +74,5 @@ public class CalibrationValuesParser {
         }
         return true;
     }
+
 }

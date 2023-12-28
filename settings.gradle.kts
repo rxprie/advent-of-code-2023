@@ -12,5 +12,5 @@ plugins {
 
 rootProject.name = "adventcode-2023"
 include(
-    "day01"
+    "days"
 )
